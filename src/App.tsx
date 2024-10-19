@@ -1,7 +1,7 @@
 function App() {
   return (
-    <div className="grid min-h-screen place-items-center bg-slate-500 text-2xl text-gray-100">
-      Hello, World!
+    <div className="grid min-h-screen place-items-center">
+      <h1 className="text-3xl">Hello, World!</h1>
     </div>
   );
 }
