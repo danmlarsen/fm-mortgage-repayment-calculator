@@ -56,15 +56,11 @@ const initialState: FormState = {
 
 type FormAction =
   | { type: "mortgageAmount/set"; payload: string }
-  | { type: "mortgageAmount/invalid"; payload: string }
   | { type: "mortgageTerm/set"; payload: string }
-  | { type: "mortgageTerm/invalid"; payload: string }
   | { type: "interestRate/set"; payload: string }
-  | { type: "mortgageAmount/set"; payload: string }
-  | { type: "interestRate/invalid"; payload: string }
   | { type: "mortgageType/set"; payload: string }
-  | { type: "mortgageType/invalid"; payload: string }
-  | { type: "submit" }
+  | { type: "submit"; payload: object }
+  | { type: "invalidForm"; payload: object }
   | { type: "clear" };
 
 const validateMortgageAmount = (
@@ -107,15 +103,6 @@ function formReducer(state: FormState, action: FormAction): FormState {
         },
       };
     }
-    case "mortgageAmount/invalid":
-      return {
-        ...state,
-        mortgageAmount: {
-          ...state.mortgageAmount,
-          valid: false,
-          invalidText: action.payload,
-        },
-      };
     case "mortgageTerm/set": {
       const [isValid, invalidText] = validateMortgageTerm(action.payload);
 
@@ -129,15 +116,6 @@ function formReducer(state: FormState, action: FormAction): FormState {
         },
       };
     }
-    case "mortgageTerm/invalid":
-      return {
-        ...state,
-        mortgageTerm: {
-          ...state.mortgageTerm,
-          valid: false,
-          invalidText: action.payload,
-        },
-      };
     case "interestRate/set": {
       const [isValid, invalidText] = validateInterestRate(action.payload);
 
@@ -151,15 +129,6 @@ function formReducer(state: FormState, action: FormAction): FormState {
         },
       };
     }
-    case "interestRate/invalid":
-      return {
-        ...state,
-        interestRate: {
-          ...state.interestRate,
-          valid: false,
-          invalidText: action.payload,
-        },
-      };
     case "mortgageType/set": {
       const [isValid, invalidText] = validateMortgageType(action.payload);
 
@@ -173,19 +142,16 @@ function formReducer(state: FormState, action: FormAction): FormState {
         },
       };
     }
-    case "mortgageType/invalid":
-      return {
-        ...state,
-        mortgageType: {
-          ...state.mortgageType,
-          valid: false,
-          invalidText: action.payload,
-        },
-      };
     case "submit":
       return {
         ...state,
+        ...action.payload,
         isSubmitted: true,
+      };
+    case "invalidForm":
+      return {
+        ...state,
+        ...action.payload,
       };
     case "clear":
       return initialState;
@@ -209,34 +175,51 @@ export default function CalculatorForm({
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    dispatch({ type: "submit" });
+    const [mortgageAmountValid, mortgageAmountInvalidText] =
+      validateMortgageAmount(mortgageAmount.value);
 
-    // if (!mortgageAmount.value)
-    //   dispatch({
-    //     type: "mortgageAmount/invalid",
-    //     payload: "This field is required",
-    //   });
-    // if (!mortgageTerm.value)
-    //   dispatch({
-    //     type: "mortgageTerm/invalid",
-    //     payload: "This field is required",
-    //   });
-    // if (!interestRate.value)
-    //   dispatch({
-    //     type: "interestRate/invalid",
-    //     payload: "This field is required",
-    //   });
-    // if (!mortgageType.value)
-    //   dispatch({
-    //     type: "mortgageType/invalid",
-    //     payload: "This field is required",
-    //   });
+    const [mortgageTermValid, mortgageTermInvalidText] = validateMortgageTerm(
+      mortgageTerm.value,
+    );
+
+    const [interestRateValid, interestRateInvalidText] = validateInterestRate(
+      interestRate.value,
+    );
+
+    const [mortgageTypeValid, mortgageTypeInvalidText] = validateMortgageType(
+      mortgageType.value,
+    );
+
+    const payload = {
+      mortgageAmount: {
+        ...mortgageAmount,
+        valid: mortgageAmountValid,
+        invalidText: mortgageAmountInvalidText,
+      },
+      mortgageTerm: {
+        ...mortgageTerm,
+        valid: mortgageTermValid,
+        invalidText: mortgageTermInvalidText,
+      },
+      interestRate: {
+        ...interestRate,
+        valid: interestRateValid,
+        invalidText: interestRateInvalidText,
+      },
+      mortgageType: {
+        ...mortgageType,
+        valid: mortgageTypeValid,
+        invalidText: mortgageTypeInvalidText,
+      },
+    };
+
+    dispatch({ type: "submit", payload });
 
     if (
-      !mortgageAmount.valid ||
-      !mortgageTerm.valid ||
-      !mortgageType.valid ||
-      interestRate.valid
+      !mortgageAmountValid ||
+      !mortgageTermValid ||
+      !interestRateValid ||
+      !mortgageTypeValid
     ) {
       return;
     }

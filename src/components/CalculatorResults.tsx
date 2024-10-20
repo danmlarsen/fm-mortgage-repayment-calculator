@@ -28,7 +28,7 @@ export default function CalculatorResults({
             <div className="space-y-100">
               <p>Total you'll repay over the term</p>
               <h4 className="text-2xl text-white">
-                {results.total.toFixed(2)}
+                £{results.total.toFixed(2)}
               </h4>
             </div>
           </div>
