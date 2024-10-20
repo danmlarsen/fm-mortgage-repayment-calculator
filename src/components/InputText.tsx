@@ -35,7 +35,9 @@ export default function InputText({
           </span>
           <input
             className="px-200 py-150 group w-full border-slate-500 focus:outline-none"
-            type="number"
+            type="text"
+            inputMode="numeric"
+            pattern="\d*"
             name={name}
             id={name}
             value={value}

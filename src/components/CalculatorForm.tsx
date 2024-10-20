@@ -67,18 +67,28 @@ const validateMortgageAmount = (
   amount: string,
 ): [isValid: boolean, invalidText: string] => {
   if (!amount) return [false, "This field is required"];
+  if (
+    isNaN(Number(amount)) ||
+    Number(amount) < 0 ||
+    Number(amount) > Number.MAX_SAFE_INTEGER
+  )
+    return [false, "Please enter a valid number"];
   return [true, ""];
 };
 const validateMortgageTerm = (
   amount: string,
 ): [isValid: boolean, invalidText: string] => {
   if (!amount) return [false, "This field is required"];
+  if (isNaN(Number(amount)) || Number(amount) < 0 || Number(amount) > 100)
+    return [false, "Please enter a valid number between 0 and 100"];
   return [true, ""];
 };
 const validateInterestRate = (
   amount: string,
 ): [isValid: boolean, invalidText: string] => {
   if (!amount) return [false, "This field is required"];
+  if (isNaN(Number(amount)) || Number(amount) < 0 || Number(amount) > 100)
+    return [false, "Please enter a valid number between 0 and 100"];
   return [true, ""];
 };
 const validateMortgageType = (
