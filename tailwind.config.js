@@ -19,6 +19,12 @@ export default {
         },
         red: "#D73328",
       },
+      maxWidth: {
+        "5xl": "63rem",
+      },
+      boxShadow: {
+        lg: "0 32px 64px 0 #133041",
+      },
     },
     fontSize: {
       sm: [
@@ -41,7 +47,7 @@ export default {
         "1.125rem",
         {
           lineHeight: "1.25",
-          letterSpacing: "-1px",
+          letterSpacing: "0",
           fontWeight: "700",
         },
       ],
@@ -49,7 +55,7 @@ export default {
         "1.5rem",
         {
           lineHeight: "1.25",
-          letterSpacing: "-1px",
+          letterSpacing: "0",
           fontWeight: "700",
         },
       ],
@@ -57,7 +63,7 @@ export default {
         "3.5rem",
         {
           lineHeight: "1.25",
-          letterSpacing: "-1px",
+          letterSpacing: "0",
           fontWeight: "700",
         },
       ],
