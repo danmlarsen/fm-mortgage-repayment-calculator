@@ -1,3 +1,5 @@
+import { AnimatePresence, motion } from "framer-motion";
+
 export default function CalculatorResultsCalculated({
   monthly,
   total,
@@ -18,11 +20,32 @@ export default function CalculatorResultsCalculated({
       <div className="p-400 border-t-lime divide-y divide-slate-300/25 rounded-lg border-t-4 bg-black/25">
         <div className="space-y-100 pb-400">
           <p>Your monthly repayments</p>
-          <h3 className="text-lime text-[2.5rem] md:text-3xl">{monthly}</h3>
+          <AnimatePresence mode="wait">
+            <motion.h3
+              key={monthly}
+              initial={false}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-lime text-[2.5rem] md:text-3xl"
+            >
+              {monthly}
+            </motion.h3>
+          </AnimatePresence>
         </div>
         <div className="space-y-100 pt-400">
           <p>Total you'll repay over the term</p>
-          <h4 className="text-2xl text-white">{total}</h4>
+          <AnimatePresence mode="wait">
+            <motion.h4
+              key={total}
+              initial={false}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ delay: 0.25 }}
+              className="text-2xl text-white"
+            >
+              {total}
+            </motion.h4>
+          </AnimatePresence>
         </div>
       </div>
     </div>
