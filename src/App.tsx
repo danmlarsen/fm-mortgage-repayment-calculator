@@ -71,7 +71,7 @@ function App() {
             handleReset={handleReset}
           />
         </div>
-        <div className="py-400 px-300 md:p-500 bg-slate-900 lg:rounded-bl-[100px]">
+        <div className="py-400 px-300 md:p-500 bg-slate-900 lg:rounded-bl-[80px]">
           <CalculatorResults results={results} />
         </div>
       </main>
